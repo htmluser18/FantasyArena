@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class ArenaApp {
     public static void main(String[] args){
@@ -40,6 +41,29 @@ public class ArenaApp {
         System.out.println("HP:"+hp);
         System.out.println("stength:"+strength);
 
+        int goblinHP = 30;
+        int goblinDamage = 5;
+        Random dice = new Random();
+
+        while(hp>0 && goblinHP>0) {
+            System.out.println("----new turn---");
+            int turnDamage = dice.nextInt(strength) + 1;
+            int critRoll = dice.nextInt(100) + 1;
+            if (critRoll <= 20) {
+                System.out.println("crutial hit..!");
+                turnDamage *= 2;
+            }
+            goblinHP -= turnDamage;
+            System.out.println("you strick for "+ turnDamage+"damage ! goblin hp is"+goblinHP);
+            if(goblinHP<=0){
+                System.out.println("you defeated the goblin..!");
+                break;
+            }
+
+            //goblin attack code
+            //hp -= goblinDamage;
+
+        }
 
     }
 
