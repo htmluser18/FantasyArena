@@ -5,17 +5,19 @@ public class ArenaApp {
     public static void main(String[] args){
 
         Scanner input = new Scanner(System.in);
-        Hero player = new Hero();
+        Random dice = new Random();
 
         System.out.println("welcome to the Arena!");
         System.out.println("enter the hero name");
-        player.name= input.nextLine();
+        String tempName= input.nextLine();
 
         System.out.println("enter the initial hp :");
-        player.hp = input.nextInt();
+        int tempHp= input.nextInt();
 
         System.out.println("enter the initial strength :");
-        player.strength = input.nextInt();
+        int tempStrength = input.nextInt();
+
+        Hero player = new Hero(tempName, tempHp, tempStrength);
 
         System.out.println("\nchoose your hero class :");
         System.out.println("1. Warrior(+strength)");
@@ -23,35 +25,36 @@ public class ArenaApp {
         System.out.println("3.Rouge(+speed)");
 
         int choice = input.nextInt();
-        String heroClass = "unknown";
+
 
         if(choice==1){
-            player.heroClass="Warrior";
+            player.setHeroClass("Warrior");
             System.out.println("u grabed a heavy sword!");
         }else if(choice==2){
-            player.heroClass="Mage";
+            player.setHeroClass("Mage");
              System.out.println("u begin to casting a spell!");
         }else if(choice==3){
-            player.heroClass="Rouge";
+            player.setHeroClass("Rouge");
             System.out.println("u hide in the shadwos..");
         }else{
-            player.heroClass="villager";
+            player.setHeroClass("villager");
             System.out.println("invalid chioce , u are jst a villager..");
 
         }
         System.out.println("----Hero Status----");
-        System.out.println("Name:"+player.name);
-        System.out.println("class:"+player.heroClass);
-        System.out.println("HP:"+player.hp);
-        System.out.println("stength:"+player.strength);
+        System.out.println("Name:"+player.getName());
+        System.out.println("class:"+player.getHeroClass());
+        System.out.println("HP:"+player.getHp());
+        System.out.println("stength:"+player.getStrength());
 
         int goblinHP = 30;
         int goblinDamage = 5;
-        Random dice = new Random();
 
-        while(player.hp>0 && goblinHP>0) {
+
+        while(player.getHp() > 0 && goblinHP > 0) {
             System.out.println("----new turn----");
-            int turnDamage = dice.nextInt(player.strength) + 1;
+
+            int turnDamage = dice.nextInt(player.getStrength()) + 1;
             int critRoll = dice.nextInt(100) + 1;
 
             if (critRoll <= 20) {
@@ -67,10 +70,10 @@ public class ArenaApp {
             }
 
             //goblin attack code
-            player.hp = player.hp - goblinDamage;
-            System.out.println("goblin hit u back ! your hp is now "+player.hp);
+            player.takeDamage(goblinDamage);
+            System.out.println("goblin hit u back ! your hp is now "+player.getHp());
 
-            if(player.hp<=0){
+            if(player.getHp()<=0){
                 System.out.println("you have fallen in battle.GAME OVER");
             }
 
