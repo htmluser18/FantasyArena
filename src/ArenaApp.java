@@ -47,11 +47,13 @@ public class ArenaApp {
         System.out.println("HP:"+player.getHp());
         System.out.println("stength:"+player.getStrength());
 
-        int goblinHP = 30;
-        int goblinDamage = 5;
+        Monster enemy = new Monster("Grommash", 30, 5, "Goblin");
+
+        System.out.println("\nSuddenly, a wild enemy blocks your path!");
+        enemy.battleCry();
 
 
-        while(player.getHp() > 0 && goblinHP > 0) {
+        while(player.getHp() > 0 && enemy.getHP > 0) {
             System.out.println("----new turn----");
 
             int turnDamage = dice.nextInt(player.getStrength()) + 1;
@@ -61,16 +63,16 @@ public class ArenaApp {
                 System.out.println("crutial hit..!");
                 turnDamage *= 2;
             }
-            goblinHP -= turnDamage;
-            System.out.println("you strick for "+ turnDamage+" damage ! goblin hp is "+goblinHP);
+            enemy.takeDamage(turnDamage);
+            System.out.println("you strick for "+ turnDamage+" damage ! goblin hp is "+enemy.getHP);
 
-            if(goblinHP<=0){
-                System.out.println("you defeated the goblin..!");
+            if(enemy.getHP<=0){
+                System.out.println("you defeated ")+ enemy.getName() + "!";
                 break;
             }
 
-            //goblin attack code
-            player.takeDamage(goblinDamage);
+            //enemy attack code
+            player.takeDamage(enemy.getStrength());
             System.out.println("goblin hit u back ! your hp is now "+player.getHp());
 
             if(player.getHp()<=0){
